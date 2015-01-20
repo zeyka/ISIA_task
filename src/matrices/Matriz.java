@@ -16,7 +16,7 @@ import java.util.Random;
 public class Matriz {
     private int[][]datos;
     private Random rnd = new Random();
-    
+
     public Matriz(int filas, int columnas, boolean inicializarAleatorio){
         datos = new int[columnas][];
         for(int i=0; i<columnas; i++){
@@ -29,40 +29,53 @@ public class Matriz {
     public Matriz(Dimension d, boolean inicializarAleatorio){
         this(d.height, d.width, inicializarAleatorio);
     }
-    
+
     public Dimension getDimension(){
         return new Dimension(datos.length, datos[0].length);
     }
-    
-    public static Matriz sumarDosMatrices(Matriz a, Matriz b) throws DimensionesIncompatibles { 
-        if(! a.getDimension().equals(b.getDimension())) throw new DimensionesIncompatibles("La suma de matrices requiere matrices de las mismas dimensiones");        
-        int i, j, filasA, columnasA; 
-        filasA = a.getDimension().height; 
-        columnasA = a.getDimension().width; 
+
+    public static Matriz sumarDosMatrices(Matriz a, Matriz b) throws DimensionesIncompatibles {
+        if(! a.getDimension().equals(b.getDimension())) throw new DimensionesIncompatibles("La suma de matrices requiere matrices de las mismas dimensiones");
+        int i, j, filasA, columnasA;
+        filasA = a.getDimension().height;
+        columnasA = a.getDimension().width;
         Matriz matrizResultante = new Matriz(filasA, columnasA, false);
-        for (j = 0; j < filasA; j++) { 
-            for (i = 0; i < columnasA; i++) { 
-                matrizResultante.datos[i][j] += a.datos[i][j] + b.datos[i][j]; 
-            } 
-        } 
-        return matrizResultante; 
-    } 
-    
+        for (j = 0; j < filasA; j++) {
+            for (i = 0; i < columnasA; i++) {
+                matrizResultante.datos[i][j] += a.datos[i][j] + b.datos[i][j];
+            }
+        }
+        return matrizResultante;
+    }
+
     @Override
     public String toString(){
         String ret = "";
         ret += "[\n";
         for (int i = 0; i < getDimension().width; i++) {
             ret += "(";
-            for (int j = 0; j < getDimension().height; j++) {  
-                ret += String.format("%3d", datos[i][j]); 
+            for (int j = 0; j < getDimension().height; j++) {
+                ret += String.format("%3d", datos[i][j]);
                 if (j != getDimension().height - 1) ret += ", ";
-            } 
+            }
             ret += ")";
             if (i != getDimension().width - 1) ret += ",";
             ret += "\n";
-        } 
+        }
         ret += "]\n";
         return ret;
+    }
+
+         //producto de dos matrices
+		    public static Matriz producto(Matriz a, Matriz b){
+		        Matriz resultado= new Matriz(a.getDimension().height,a.getDimension().height,false);
+		        for(int i=0; i<a.getDimension().height; i++){
+		            for(int j=0; j<a.getDimension().height; j++){
+		                for(int k=0; k<a.getDimension().height; k++){
+		                    resultado.datos[i][j]+=a.datos[i][k]*b.datos[k][j];
+		                }
+		            }
+		        }
+		        return resultado;
     }
 }
